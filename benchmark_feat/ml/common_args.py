@@ -1,0 +1,17 @@
+common_args = {
+    'max_depth': 6,
+    'max_dim' : 50, 
+    'gens' : 200,
+    'pop_size' : 500,
+    'max_time' : 3600,
+    'max_stall' : 20,
+    'stagewise_xo' : True,
+    'verbosity': 2,
+    'shuffle': True,
+    'ml': 'L1_LR',
+    'batch_size': 500,
+    'classification': True,
+    'backprop': True,
+    'iters': 1,
+    'n_threads' : 1,
+    }
