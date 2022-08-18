@@ -3,6 +3,7 @@ import json
 import os
 import numpy as np
 import pickle
+
 from sklearn.metrics import accuracy_score, precision_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import average_precision_score
@@ -10,6 +11,9 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
+
+import argparse
+import importlib
 
 targets = {
         'htn_dx_ia':'Htndx',
@@ -29,13 +33,11 @@ def read_data(target, fold, repeat, data_dir):
     # setup target
     
     target_new = targets[target]
-    
-    df_train = pd.read_csv(data_dir+'Dataset' + str(repeat) +  '/' + 
-            target_new + '/' + target_new + fold + 'Train.csv')
-    df_test = pd.read_csv(data_dir+'Dataset' + str(repeat) +  '/' + 
-            target_new + '/' + target_new + fold + 'Test.csv')
 
-    
+    ddir = os.path.join(data_dir, 'Dataset' + str(repeat), target_new)
+    df_train = pd.read_csv(ddir + '/' + target_new + fold + 'Train.csv')
+    df_test = pd.read_csv(ddir + '/' + target_new + fold + 'Test.csv')
+   
     #Training
     df_y = df_train[target].astype(int)
     # setup predictors
@@ -163,8 +165,6 @@ def evaluate_model(estimator, name, target, fold, random_state, rdir, repeat,
 ################################################################################
 # main entry point
 ################################################################################
-import argparse
-import importlib
 
 if __name__ == '__main__':
 
@@ -188,9 +188,12 @@ if __name__ == '__main__':
             default=None, type=str, help='endpoint name',
             choices = ['htn_dx_ia', 'res_htn_dx_ia', 'htn_hypok_dx_ia', 
                'HTN_heuristic', 'res_HTN_heuristic', 'hypoK_heuristic_v4'])
+    parser.add_argument('-datadir', action='store', dest='DDIR',default='./',
+            type=str, help='input data directory')
 
     args = parser.parse_args()
-
+    print(args)
+    
     # import algorithm 
     print('import from','models.'+args.ALG)
     algorithm = importlib.__import__('models.'+args.ALG,globals(),locals(),
@@ -199,4 +202,6 @@ if __name__ == '__main__':
     print('algorithm:',algorithm.name,algorithm.clf)
     evaluate_model(algorithm.clf, algorithm.name, 
                    args.TARGET, args.FOLD, args.RANDOM_STATE, args.RDIR,
-                   args.REPEAT)
+                   args.REPEAT,
+                  data_dir = args.DDIR)
+    

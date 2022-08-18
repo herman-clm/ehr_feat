@@ -39,6 +39,8 @@ if __name__ == '__main__':
             '871,21924,30132,10102,29759,8653,18998,7376,9271,9292')            
     parser.add_argument('-results',action='store',dest='RDIR',                  
             default='results/',type=str,help='Results directory')               
+    parser.add_argument('-data-dir',action='store',dest='DDIR',                  
+            default='./',type=str,help='Input data directory')               
     parser.add_argument('-n_trials',action='store',dest='N_TRIALS',default=1,  
             type=int, help='Number of trials to run')                           
     parser.add_argument('-n_jobs',action='store',dest='N_JOBS',default=1,          
@@ -94,20 +96,22 @@ if __name__ == '__main__':
                 for seed in seeds:
                     for fold in folds:
                         random_state = seed
-                        all_commands.append('python evaluate_model.py '
+                        all_commands.append('python ~/repos/ehr-feat/evaluate_model.py '
                                     ' -ml {ML}'
                                     ' -target {TARGET}'
                                     ' -seed {RS}'
                                     ' -rdir {RDIR}'
                                     ' -fold {FO}'
-                                    ' -repeat {REPEAT}'.format(
+                                    ' -repeat {REPEAT}'
+                                    ' -datadir {DDIR}'.format(
                                                            ML=ml,
                                                            TARGET=target,
                                                            RS=random_state,
                                                            RDIR=filepath,
                                                            FO=fold,
                                                            REPEAT=repeat,
-                                                           NJ=args.N_JOBS
+                                                           NJ=args.N_JOBS,
+                                                           DDIR=args.DDIR
                                                           )
                                             )                   
                         job_info.append({
@@ -145,7 +149,7 @@ if __name__ == '__main__':
                                QUEUE=queue,
                                N_CORES=args.N_JOBS,
                                M=args.M,
-                               MMAX=32000)
+                               MMAX=args.M)
             
             bsub_cmd +=  '"' + run_cmd + '"'
             print(bsub_cmd)
