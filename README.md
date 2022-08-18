@@ -1,7 +1,7 @@
 # Using FEAT to learn computable phenotypes
 
 This repo contains the code to reproduce the results obtained in the following paper:
-La Cava, W., Lee, P. C., Ajmal, I., Ding, X., Solanki, P., Cohen, J. B., Moore, J. H., & Herman, D. S. (2020). 
+La~Cava, W., Lee, P. C., Ajmal, I., Ding, X., Solanki, P., Cohen, J. B., Moore, J. H., & Herman, D. S. (2020). 
 Application of concise machine learning to construct accurate and interpretable EHR computable phenotypes. 
 [MedRxiv, 2020.12.12.20248005.](https://doi.org/10.1101/2020.12.12.20248005)
 
@@ -61,8 +61,9 @@ export EIGEN3_INCLUDE_DIR=/path/to/anaconda/envs/feat-env/include/eigen3/
 ## Acknowledgments
 
 We would like to thank Debbie Cohen for helpful discussions about secondary hypertension. 
+W. La Cava was supported by NIH grant K99-LM012926.
 This work was supported by Grant 2019084 from the Doris Duke Charitable Foundation and the University of Pennsylvania. 
-W. La Cava was supported by NIH grant K99LM012926. 
+W.La Cava was supported by NIH grant K99LM012926. 
 J.H. Moore and W. La Cava were supported by NIH grant R01 LM010098. 
 J. B. Cohen was supported by NIH grants K23HL133843 and R01HL153646.  
 
